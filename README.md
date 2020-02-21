@@ -54,13 +54,17 @@ telehealth_dat$Productivity = gsub("-", "", telehealth_dat$Productivity)
 telehealth_dat$Productivity = gsub("0.00", "", telehealth_dat$Productivity)
 telehealth_dat$Productivity  = as.numeric(telehealth_dat$Productivity)
 ### change this later but add a treatment date 2019-06-01
-telehealth_dat$Time = ifelse(telehealth_dat$Year.Month >= "2019-06-01", 1, 0)
+telehealth_dat$Time = ifelse(telehealth_dat$Year.Month >= "2019-11-01", 1, 0)
 telehealth_dat_complete = na.omit(telehealth_dat)
 dim(telehealth_dat_complete)
 telehealth_dat_complete
 ```
 Try graphing by treatment
 Therapists CIN do not include either Telehealth therapists
+Break out for each therapist, add trend line
+
+SN = Mid Jan
+P = Mid November
 ```{r}
 library(ggplot2)
 telehealth_dat_complete$Telehealth = as.factor(telehealth_dat_complete$Telehealth)
@@ -68,7 +72,7 @@ ggplot(telehealth_dat_complete, aes(Year.Month, Productivity, colour = Telehealt
   geom_point()+ 
   geom_line()+
   ggtitle("Productivity for Telehealth Therapists for CIN vs. CIN Therapists")+
-  geom_vline(xintercept = telehealth_dat_complete$Year.Month[46], colour="black")+
+  geom_vline(xintercept = telehealth_dat_complete$Year.Month[50], colour="black")+
   xlab("Date")
 ```
 Linear model to evaluate if differences exist
